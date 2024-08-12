@@ -36,11 +36,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                     // Run the prediction
                     const predictions = await model.executeAsync(resizedImageTensor);
 
-                    // Process and visualize predictions
-                    const faceCount = processPredictions(predictions);
+                    // Randomly choose between refined and chaotic detection
+                    const randomChoice = Math.random();
+                    let faceCount = 0;
 
-                    // Log the number of faces detected in the console
-                    console.log(`Detected ${faceCount} face(s)`);
+                    if (randomChoice < 0.5) {
+                        faceCount = processPredictionsRefined(predictions);
+                    } else {
+                        faceCount = processPredictionsChaotic(predictions);
+                    }
 
                     // Overlay the number of faces detected on the canvas
                     addTextToCanvas(`DETECTED ${faceCount} FACE(S)`);
@@ -83,15 +87,16 @@ document.addEventListener('DOMContentLoaded', async function () {
         canvas.style.height = `${newHeight}px`;
     }
 
-    function processPredictions(predictions) {
+    // Refined detection method
+    function processPredictionsRefined(predictions) {
         const [boxes, scores, classes] = predictions;
-    
-        const detectionThreshold = 0.9;  // Higher threshold for better accuracy
+
+        const detectionThreshold = 0.99;  // Higher threshold for better accuracy
         let faceCount = 0;
-    
+
         const canvasWidth = canvas.width;
         const canvasHeight = canvas.height;
-    
+
         for (let i = 0; i < scores.shape[1]; i++) {
             if (scores.dataSync()[i] > detectionThreshold) {
                 const [y1, x1, y2, x2] = boxes.dataSync().slice(i * 4, (i + 1) * 4);
@@ -99,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const height = (y2 - y1) * canvasHeight;
                 const x = x1 * canvasWidth;
                 const y = y1 * canvasHeight;
-    
+
                 // Ensure bounding box is within canvas bounds
                 if (x >= 0 && y >= 0 && width > 0 && height > 0 && (x + width) <= canvasWidth && (y + height) <= canvasHeight) {
                     drawBoundingBox(x, y, width, height);
@@ -108,10 +113,39 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
             }
         }
-    
+
         return faceCount;
     }
-    
+
+    // Chaotic detection method
+    function processPredictionsChaotic(predictions) {
+        const [boxes, scores, classes] = predictions;
+
+        const detectionThreshold = 0.7;  // Lower threshold for more detections
+        let faceCount = 0;
+
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+
+        for (let i = 0; i < scores.shape[1]; i++) {
+            if (scores.dataSync()[i] > detectionThreshold) {
+                const [y1, x1, y2, x2] = boxes.dataSync().slice(i * 4, (i + 1) * 4);
+                const width = (x2 - x1) * canvasWidth;
+                const height = (y2 - y1) * canvasHeight;
+                const x = x1 * canvasWidth;
+                const y = y1 * canvasHeight;
+
+                // Looser bounds, allowing more flexibility
+                if (width > 10 && height > 10) { // Only filtering out tiny boxes
+                    drawBoundingBox(x, y, width, height);
+                    pixelateFace(x, y, width, height, Math.floor(Math.random() * 50) + 10);  // Random pixel size for chaos
+                    faceCount++;
+                }
+            }
+        }
+
+        return faceCount;
+    }
 
     function drawBoundingBox(x, y, width, height) {
         ctx.strokeStyle = 'red';
@@ -163,7 +197,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         // Draw the text on the canvas
         ctx.fillText(text, textX, textY);
     }
-    
 
     document.getElementById('download').addEventListener('click', function() {
         const link = document.createElement('a');
