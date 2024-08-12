@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Detection and Pixelation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0%;
+            height: 97.5vh;
+            background-color: #262627;
+            color: #f7fcfe;
+            /*border: 10px  solid #f7fcfe;*/
+        }
+
+        #canvas {
+            width: 100%;
+            height: 70vh;
+            margin-left: 5%;
+        }
+
+        #controls {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 20%;
+            height: 70vh;
+            margin-right: 5%;
+        }
+
+        #face-count {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #ouptut {
+            width: 75%;
+            height: 70vh;
+            flex-direction: column;
+            align-items: center;
+        }
+        #main {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 80vh; 
+        }
+
+        #header{
+            height: 7vh;
+        }
+
+        /* Style for the introduction section */
+        #introduction {
+            margin-bottom: 20px;
+            color: #f7fcfe;
+        }
+
+        #introduction h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        #introduction p {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Style for the custom file input label */
+        #upload {
+            display: none; /* Hide the actual file input */
+        }
+
+        #upload-label {
+            width: 34%;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: transparent;
+            border: 2px solid #f7fcfe;
+            border-radius: 0; /* Remove rounded corners */
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: inline-block; /* Ensure it's treated like a button */
+            margin-bottom: 10px; /* Spacing between the buttons */
+            text-align: center;
+        }
+
+        #upload-label:hover {
+            background-color: #f7fcfe;
+            color: #262627;
+        }
+
+        /* Style for the download button */
+        #download {
+            width:61%;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #f7fcfe;
+            background-color: transparent;
+            border: 2px solid #f7fcfe;
+            border-radius: 0; /* Remove rounded corners */
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: inline-block;
+            text-align: center;
+        }
+
+        #download:hover {
+            background-color: #f7fcfe;
+            color: #262627;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>
+            ALGO GAYZE
+        </h1>
+    </div>
+    <div id="main">
+        <div id="output">
+            <canvas id="canvas"></canvas>
+        </div>
+        
+        <div id="controls">
+            <div id="introduction">
+                <h2>About ALGO GAYZE</h2>
+                <p>ALGO GAYZE examines the ethics of algorithms and their significant impact on our digital lives. This project invites you to explore how algorithms "see" when they scan and interpret images, and what happens when they fail.</p>
+
+                <p>By uploading an image, you can witness the algorithm's attempt to detect faces using TensorFlow.js and SSD Mobilenet V1. The process reveals not just the technology’s capabilities, but also its errors—moments when it misidentifies objects or fails entirely. These mistakes expose the biases in the data and models created by humans.</p>
+
+                <p>ALGO GAYZE challenges us to consider the implications of these errors in systems that hold immense power, highlighting the delicate balance between technological advancement and ethical responsibility.</p>
+
+                <p>Also, I think they're pretty — and humorous.</p>
+
+            </div>
+            <input type="file" id="upload" />
+            <label for="upload" id="upload-label">Choose File</label>
+            <button id="download">Download Pixelated Image</button>
+        </div>         
+
+        <!-- Include TensorFlow.js -->
+        <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+        
+        <!-- Your custom script -->
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>
