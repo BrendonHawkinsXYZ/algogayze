@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="Algo Favi.png">
     <title>ALGO GAYZE</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -14,13 +19,23 @@
             height: 97.5vh;
             background-color: #262627;
             color: #f7fcfe;
-            /*border: 10px  solid #f7fcfe;*/
+        }
+
+        #title{
+            cursor: pointer;
         }
 
         #canvas {
             width: 100%;
             height: 70vh;
             margin-left: 5%;
+        }
+
+        #buttons {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: space-between;
         }
 
         #controls {
@@ -38,12 +53,13 @@
             font-weight: bold;
         }
 
-        #ouptut {
+        #output {
             width: 75%;
             height: 70vh;
             flex-direction: column;
             align-items: center;
         }
+
         #main {
             display: flex;
             flex-direction: row;
@@ -53,11 +69,10 @@
             height: 80vh; 
         }
 
-        #header{
+        #header {
             height: 7vh;
         }
 
-        /* Style for the introduction section */
         #introduction {
             margin-bottom: 20px;
             color: #f7fcfe;
@@ -73,60 +88,145 @@
             line-height: 1.5;
         }
 
-        /* Style for the custom file input label */
         #upload {
-            display: none; /* Hide the actual file input */
+            display: none; 
         }
 
-        #upload-label {
-            width: 34%;
+        #upload-label, #download {
+            width: 48%; /* Ensure the buttons are the same size */
             padding: 10px 20px;
             font-size: 16px;
             font-weight: bold;
             background-color: transparent;
-            border: 2px solid #f7fcfe;
-            border-radius: 0; /* Remove rounded corners */
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            display: inline-block; /* Ensure it's treated like a button */
-            margin-bottom: 10px; /* Spacing between the buttons */
-            text-align: center;
-        }
-
-        #upload-label:hover {
-            background-color: #f7fcfe;
-            color: #262627;
-        }
-
-        /* Style for the download button */
-        #download {
-            width:61%;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
             color: #f7fcfe;
-            background-color: transparent;
             border: 2px solid #f7fcfe;
-            border-radius: 0; /* Remove rounded corners */
+            border-radius: 0;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
             display: inline-block;
             text-align: center;
+            margin-bottom: 10px;
         }
 
-        #download:hover {
+        #upload-label:hover, #download:hover {
             background-color: #f7fcfe;
             color: #262627;
         }
+        
+         /* Responsive Design */
+         @media (max-width: 1024px) {
+            #main {
+                flex-direction: column;
+                height: auto;
+            }
+
+            #output {
+                max-width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                margin-bottom: 2.5%;
+                align-items: center;
+                height: auto;
+            }
+
+            #controls {
+                width: 40%; /* Increased width for tablets */
+                margin-left: 0;
+                margin-right: 0;
+                align-items: center;
+                height: auto;
+            }
+            #introduction{
+                text-align: center;
+            }
+
+            #canvas {
+                height: 50vh;
+            }
+
+            #controls {
+                align-items: center;
+            }
+
+            #buttons {
+                flex-direction: row;
+                width: 100%;
+                align-items: center;
+            }
+
+            #upload-label, #download {
+                width: 48%; /* Ensures both buttons have the same width */
+            }
+        }
+            
 
 
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #main {
+                flex-direction: column;
+                height: auto;
+            }
+
+            #output {
+                max-width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                align-items: center;
+                height: auto;
+            }
+
+            #controls {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                align-items: center;
+                height: auto;
+            }
+
+            #canvas {
+                height: 50vh;
+            }
+
+            #controls {
+                align-items: center;
+            }
+
+            #buttons {
+                flex-direction: column;
+                width: 90%; /* Prevents horizontal scrolling */
+                align-items: center;
+            }
+
+            #upload-label, #download {
+                width: 80%; /* Match button sizes */
+            }
+        }
+
+        @media (max-width: 480px) {
+            #introduction h2 {
+                font-size: 16px;
+            }
+
+            #introduction p {
+                font-size: 12px;
+            }
+
+            #upload-label, #download {
+                width: 90%; /* Match button sizes */
+                font-size: 14px;
+            }
+
+            #canvas {
+                height: 40vh;
+            }
+        }
+        
     </style>
 </head>
 <body>
     <div id="header">
-        <h1>
-            ALGO GAYZE
-        </h1>
+        <h1 id="title">ALGO GAYZE</h1>
     </div>
     <div id="main">
         <div id="output">
@@ -134,6 +234,11 @@
         </div>
         
         <div id="controls">
+            <div id="buttons">
+                <input type="file" id="upload" />
+                <label for="upload" id="upload-label">UPLOAD</label>
+                <button id="download" disabled>DOWNLOAD</button>
+            </div>
             <div id="introduction">
                 <h2>About ALGO GAYZE</h2>
                 <p>ALGO GAYZE examines the ethics of algorithms and their significant impact on our digital lives. This project invites you to explore how algorithms "see" when they scan and interpret images, and what happens when they fail.</p>
@@ -145,9 +250,6 @@
                 <p>Also, I think they're pretty — and humorous.</p>
 
             </div>
-            <input type="file" id="upload" />
-            <label for="upload" id="upload-label">Choose File</label>
-            <button id="download">Download Pixelated Image</button>
         </div>         
 
         <!-- TensorFlow.js -->
@@ -155,6 +257,14 @@
         
         <!-- custom script -->
         <script src="script.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+        <script src="script.js"></script>
+
+        <script>
+            document.getElementById('title').addEventListener('click', function() {
+                window.location.reload();
+            });
+        </script>
     </div>
 </body>
 </html>
