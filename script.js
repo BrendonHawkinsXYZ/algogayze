@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     loadModel();
 
     document.getElementById('upload').addEventListener('change', handleImageUpload);
+    const downloadButton = document.getElementById('download');
+    downloadButton.disabled = true; // Disable the download button by default
 
     async function handleImageUpload(event) {
         const file = event.target.files[0];
@@ -48,6 +50,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                     // Overlay the number of faces detected on the canvas
                     addTextToCanvas(`DETECTED ${faceCount} FACE(S)`);
+
+                    // Enable the download button after the image is processed
+                    downloadButton.disabled = false;
 
                     // Clean up
                     tf.dispose([resizedImageTensor, predictions]);
@@ -199,9 +204,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     document.getElementById('download').addEventListener('click', function() {
-        const link = document.createElement('a');
-        link.download = 'pixelated-image.png';
-        link.href = canvas.toDataURL();
-        link.click();
+        if (!downloadButton.disabled) {
+            const link = document.createElement('a');
+            link.download = 'pixelated-image.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
     });
 });
