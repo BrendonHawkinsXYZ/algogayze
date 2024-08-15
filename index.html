@@ -21,8 +21,21 @@
             color: #f7fcfe;
         }
 
-        #title{
+        #title {
             cursor: pointer;
+            font-size: 2.5rem;
+            margin-top: 2%;
+            margin-bottom: 0px;
+            width: 100%;
+            text-align: center;
+        }
+
+        #privacy-policy {
+            cursor: pointer;
+            font-size: 14px;
+            color: #f7fcfe;
+            margin-top: .5%;
+            text-decoration: underline;
         }
 
         #canvas {
@@ -70,7 +83,11 @@
         }
 
         #header {
-            height: 7vh;
+            height: 10vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         #introduction {
@@ -112,9 +129,9 @@
             background-color: #f7fcfe;
             color: #262627;
         }
-        
-         /* Responsive Design */
-         @media (max-width: 1024px) {
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
             #main {
                 flex-direction: column;
                 height: auto;
@@ -122,10 +139,10 @@
 
             #output {
                 max-width: 100%;
+                margin-top: 2.5%;
                 margin-left: 0;
                 margin-right: 0;
                 margin-bottom: 2.5%;
-                margin-top: 2.5%;
                 align-items: center;
                 height: auto;
             }
@@ -159,8 +176,6 @@
                 width: 48%; /* Ensures both buttons have the same width */
             }
         }
-            
-
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -228,6 +243,7 @@
 <body>
     <div id="header">
         <h1 id="title">ALGO GAYZE</h1>
+        <div id="privacy-policy">Privacy Policy</div>
     </div>
     <div id="main">
         <div id="output">
@@ -258,12 +274,15 @@
         
         <!-- custom script -->
         <script src="script.js"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-        <script src="script.js"></script>
 
         <script>
             document.getElementById('title').addEventListener('click', function() {
                 window.location.reload();
+            });
+
+            document.getElementById('privacy-policy').addEventListener('click', function() {
+                // Redirect to the privacy policy page
+                window.location.href = 'AlgoPrivacyPolicy.pdf';
             });
         </script>
     </div>
