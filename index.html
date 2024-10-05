@@ -30,6 +30,21 @@
             text-align: center;
         }
 
+        #header-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        #privacy-policy, #gallery-button {
+            cursor: pointer;
+            font-size: 14px;
+            color: #f7fcfe;
+            margin-top: .5%;
+            text-decoration: underline;
+            height: auto;
+        }
+
+
         #privacy-policy {
             cursor: pointer;
             font-size: 14px;
@@ -130,6 +145,33 @@
         #upload-label:hover, #download:hover {
             background-color: #f7fcfe;
             color: #262627;
+        }
+        #loading-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(38, 38, 39, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none; /* Initially hidden */
+        }
+
+        #loading-spinner {
+            border: 16px solid #f7fcfe;
+            border-top: 16px solid #262627;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Responsive Design */
@@ -245,8 +287,12 @@
 <body>
     <div id="header">
         <h1 id="title">ALGO GAYZE</h1>
-        <div id="privacy-policy">Privacy Policy</div>
+        <div id="header-buttons">
+            <div id="privacy-policy">Privacy Policy</div>
+            <div id="gallery-button">Gallery</div>
+        </div>
     </div>
+    
     <div id="main">
         <div id="output">
             <canvas id="canvas"></canvas>
@@ -269,6 +315,9 @@
                 <p>Also, I think they're pretty — and humorous.</p>
 
             </div>
+        </div>
+        <div id="loading-indicator">
+            <div id="loading-spinner"></div>
         </div>         
 
         <!-- TensorFlow.js -->
@@ -281,12 +330,15 @@
             document.getElementById('title').addEventListener('click', function() {
                 window.location.reload();
             });
-
+        
             document.getElementById('privacy-policy').addEventListener('click', function() {
-            // Open the privacy policy in a new tab
-            window.open('AlgoPrivacyPolicy.pdf', '_blank');
+                window.open('AlgoPrivacyPolicy.pdf', '_blank');
             });
-        </script>
+        
+            document.getElementById('gallery-button').addEventListener('click', function() {
+                window.location.href = 'gallery.html';
+            });
+        </script>        
     </div>
 </body>
 </html>
