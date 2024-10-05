@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Include the same head content as your main page -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="Algo Favi.png">
+    <title>ALGO GAYZE - Gallery</title>
+    <!-- Include your styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0%;
+        height: 100vh;
+        background-color: #262627;
+        color: #f7fcfe;
+    }
+
+    #title {
+        cursor: pointer;
+        font-size: 2.5rem;
+        margin-top: 2%;
+        margin-bottom: 0px;
+        width: 100%;
+        text-align: center;
+    }
+
+    #header-buttons {
+        display: flex;
+        gap: 20px;
+    }
+
+    #privacy-policy, #gallery-button {
+        cursor: pointer;
+        font-size: 14px;
+        color: #f7fcfe;
+        margin-top: .5%;
+        text-decoration: underline;
+        height: auto;
+    }
+    .gallery-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-gap: 10px;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .gallery-container img {
+        width: 100%;
+        height: auto;
+    }
+
+
+    #privacy-policy {
+        cursor: pointer;
+        font-size: 14px;
+        color: #f7fcfe;
+        margin-top: .5%;
+        text-decoration: underline;
+        height: auto;
+    }
+
+    #canvas {
+        width: 100%;
+        height: 70vh;
+        margin-left: 5%;
+    }
+
+    #buttons {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    #controls {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 20%;
+        height: 70vh;
+        margin-right: 5%;
+    }
+
+    #face-count {
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    #output {
+        width: 75%;
+        height: 70vh;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #main {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 80vh; 
+    }
+
+    #header {
+        height: 10vh;
+        width: 100%;
+        margin-bottom: 2%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #introduction {
+        margin-bottom: 20px;
+        color: #f7fcfe;
+    }
+
+    #introduction h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    #introduction p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    #upload {
+        display: none; 
+    }
+
+    #upload-label, #download {
+        width: 48%; /* Ensure the buttons are the same size */
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: transparent;
+        color: #f7fcfe;
+        border: 2px solid #f7fcfe;
+        border-radius: 0;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        display: inline-block;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    #upload-label:hover, #download:hover {
+        background-color: #f7fcfe;
+        color: #262627;
+    }
+    #loading-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(38, 38, 39, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        display: none; /* Initially hidden */
+    }
+
+    #loading-spinner {
+        border: 16px solid #f7fcfe;
+        border-top: 16px solid #262627;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        #main {
+            flex-direction: column;
+            height: auto;
+        }
+
+        #output {
+            max-width: 100%;
+            margin-top: 2.5%;
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 2.5%;
+            align-items: center;
+            height: auto;
+        }
+
+        #controls {
+            width: 40%; /* Increased width for tablets */
+            margin-left: 0;
+            margin-right: 0;
+            align-items: center;
+            height: auto;
+        }
+        #introduction{
+            text-align: center;
+        }
+
+        #canvas {
+            height: 50vh;
+        }
+
+        #controls {
+            align-items: center;
+        }
+
+        #buttons {
+            flex-direction: row;
+            width: 100%;
+            align-items: center;
+        }
+
+        #upload-label, #download {
+            width: 48%; /* Ensures both buttons have the same width */
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        #main {
+            flex-direction: column;
+            height: auto;
+        }
+
+        #output {
+            max-width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            align-items: center;
+            height: auto;
+        }
+
+        #controls {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            align-items: center;
+            height: auto;
+        }
+
+        #canvas {
+            height: 50vh;
+        }
+
+        #controls {
+            align-items: center;
+        }
+
+        #buttons {
+            flex-direction: column;
+            width: 90%; /* Prevents horizontal scrolling */
+            align-items: center;
+        }
+
+        #upload-label, #download {
+            width: 80%; /* Match button sizes */
+        }
+    }
+
+    @media (max-width: 480px) {
+        #introduction h2 {
+            font-size: 16px;
+        }
+
+        #introduction p {
+            font-size: 12px;
+        }
+
+        #upload-label, #download {
+            width: 90%; /* Match button sizes */
+            font-size: 14px;
+        }
+
+        #canvas {
+            height: 40vh;
+        }
+    }
+    
+</style>
+<body>
+    <div id="header">
+        <h1 id="title">ALGO GAYZE</h1>
+        <div id="header-buttons">
+            <div id="privacy-policy">Privacy Policy</div>
+            <div id="gallery-button">Gallery</div>
+        </div>
+    </div>
+    <div id="gallery">
+        <div class="gallery-container">
+            <img src="pixelated-image-42.png" alt="Image 1">
+            <img src="pixelated-image-58.png" alt="Image 2">
+            <img src="IMG_5764.PNG" alt="Image 3">
+            <img src="pixelated-image-59.png" alt="Image 4">
+            <img src="pixelated-image-46.png" alt="Image 5">
+            <img src="pixelated-image-10.png" alt="Image 6">
+            <img src="pixelated-image-14.png" alt="Image 7">
+            <!-- Add more images as needed -->
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('title').addEventListener('click', function() {
+            window.location.href = 'Sitepage.html';
+        });
+
+        document.getElementById('privacy-policy').addEventListener('click', function() {
+            window.open('AlgoPrivacyPolicy.pdf', '_blank');
+        });
+
+        document.getElementById('gallery-button').addEventListener('click', function() {
+            // Already on the gallery page, so this could refresh or do nothing
+            window.location.href = 'gallery.html';
+        });
+    </script>
+</body>
+</html>
