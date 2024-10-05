@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function () {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+    const loadingIndicator = document.getElementById('loading-indicator');
     let model;
 
     // Load the YOLO-based model
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     async function handleImageUpload(event) {
         const file = event.target.files[0];
         if (file) {
+            loadingIndicator.style.display = 'flex'; // Show loading indicator
             const reader = new FileReader();
             reader.onload = async function(e) {
                 const img = new Image();
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     // Ensure the model is loaded before running predictions
                     if (!model) {
                         console.error("Model not loaded yet.");
+                        loadingIndicator.style.display = 'none'; // Hide loading indicator
                         return;
                     }
 
@@ -56,6 +59,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                     // Clean up
                     tf.dispose([resizedImageTensor, predictions]);
+
+                    loadingIndicator.style.display = 'none'; // Hide loading indicator
                 };
                 img.src = e.target.result;
             };
